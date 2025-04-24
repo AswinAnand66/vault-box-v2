@@ -1,0 +1,59 @@
+<div class="emergency-access-container">
+  <h1>Emergency Access</h1>
+
+  <div class="access-form" *ngIf="entries.length === 0">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Request Emergency Access</mat-card-title>
+        <mat-card-subtitle>Enter your email and verification code to access the vault</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="accessForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="accessForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="accessForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Verification Code</mat-label>
+            <input matInput formControlName="verificationCode">
+            <mat-error *ngIf="accessForm.get('verificationCode')?.hasError('required')">
+              Verification code is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="error-message" *ngIf="error">
+            {{ error }}
+          </div>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="accessForm.invalid || loading">
+            <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+            <span *ngIf="!loading">Access Vault</span>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="entries-container" *ngIf="entries.length > 0">
+    <mat-card *ngFor="let entry of entries" class="entry-card">
+      <mat-card-header>
+        <mat-card-title>{{ entry.title }}</mat-card-title>
+        <mat-card-subtitle>{{ entry.category }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="content-box">
+          {{ entry.content }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

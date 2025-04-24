@@ -1,0 +1,52 @@
+<div class="vault-container">
+  <div class="header">
+    <h1>My Vault</h1>
+    <button mat-raised-button color="primary" (click)="openAddEntryDialog()">
+      <mat-icon>add</mat-icon>
+      Add Entry
+    </button>
+  </div>
+
+  <div class="entries-container" *ngIf="!loading; else loadingSpinner">
+    <mat-card *ngFor="let entry of entries" class="entry-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>{{ getCategoryIcon(entry.category) }}</mat-icon>
+        <mat-card-title>{{ entry.title }}</mat-card-title>
+        <mat-card-subtitle>{{ entry.category }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>Private: {{ entry.isPrivate ? 'Yes' : 'No' }}</p>
+        <p *ngIf="entry.autoDeleteDate">
+          Auto-delete: {{ entry.autoDeleteDate | date }}
+        </p>
+        <p *ngIf="entry.unlockAfterDate">
+          Unlock after: {{ entry.unlockAfterDate | date }}
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="openViewEntryDialog(entry)">
+          <mat-icon>visibility</mat-icon>
+          View
+        </button>
+        <button mat-button color="warn" (click)="deleteEntry(entry._id || '')">
+          <mat-icon>delete</mat-icon>
+          Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div class="empty-state" *ngIf="entries.length === 0">
+      <mat-icon>folder_open</mat-icon>
+      <h2>Your vault is empty</h2>
+      <p>Add your first entry to get started</p>
+    </div>
+  </div>
+
+  <ng-template #loadingSpinner>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+</div> 

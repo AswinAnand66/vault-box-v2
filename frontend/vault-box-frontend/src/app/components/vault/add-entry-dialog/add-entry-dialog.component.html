@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Add New Entry</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="entryForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Content</mat-label>
+      <textarea matInput formControlName="content" required rows="4"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category" required>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isPrivate">Private Entry</mat-checkbox>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Auto-delete Date</mat-label>
+      <input matInput [matDatepicker]="autoDeletePicker" formControlName="autoDeleteDate">
+      <mat-datepicker-toggle matSuffix [for]="autoDeletePicker"></mat-datepicker-toggle>
+      <mat-datepicker #autoDeletePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Unlock After Date</mat-label>
+      <input matInput [matDatepicker]="unlockAfterPicker" formControlName="unlockAfterDate">
+      <mat-datepicker-toggle matSuffix [for]="unlockAfterPicker"></mat-datepicker-toggle>
+      <mat-datepicker #unlockAfterPicker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!entryForm.valid">
+    Add Entry
+  </button>
+</mat-dialog-actions> 

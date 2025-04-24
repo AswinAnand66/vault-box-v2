@@ -1,0 +1,74 @@
+<div class="trusted-contact-container">
+  <h1>Trusted Contact</h1>
+
+  <div class="current-contact" *ngIf="currentContact">
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar>person</mat-icon>
+        <mat-card-title>{{ currentContact.name }}</mat-card-title>
+        <mat-card-subtitle>{{ currentContact.email }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p><strong>Unlock Delay:</strong> {{ currentContact.unlockDelay }} days</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="requestEmergencyAccess()">
+          Request Emergency Access
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="contact-form" *ngIf="!currentContact">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Set Trusted Contact</mat-card-title>
+        <mat-card-subtitle>Choose someone you trust to access your vault in case of emergency</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="contactForm.get('name')?.hasError('required')">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-error *ngIf="contactForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Unlock Delay (days)</mat-label>
+            <input matInput formControlName="unlockDelay" type="number">
+            <mat-error *ngIf="contactForm.get('unlockDelay')?.hasError('required')">
+              Unlock delay is required
+            </mat-error>
+            <mat-error *ngIf="contactForm.get('unlockDelay')?.hasError('min')">
+              Unlock delay must be at least 1 day
+            </mat-error>
+          </mat-form-field>
+
+          <div class="error-message" *ngIf="error">
+            {{ error }}
+          </div>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">
+            Set Trusted Contact
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

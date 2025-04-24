@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ entry.title }}</h2>
+
+<mat-dialog-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ entry.title }}</mat-card-title>
+      <mat-card-subtitle>{{ entry.category }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ entry.content }}</p>
+      <p>Private: {{ entry.isPrivate ? 'Yes' : 'No' }}</p>
+      <p *ngIf="entry.autoDeleteDate">
+        Auto-delete: {{ entry.autoDeleteDate | date }}
+      </p>
+      <p *ngIf="entry.unlockAfterDate">
+        Unlock after: {{ entry.unlockAfterDate | date }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Close</button>
+</mat-dialog-actions> 

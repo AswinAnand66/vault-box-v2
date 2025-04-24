@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <span>VaultBox</span>
+  <span class="spacer"></span>
+  <nav *ngIf="isAuthenticated">
+    <a mat-button routerLink="/vault" routerLinkActive="active">My Vault</a>
+    <a mat-button routerLink="/trusted-contact" routerLinkActive="active">Trusted Contact</a>
+    <button mat-button (click)="logout()">Logout</button>
+  </nav>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>&copy; 2024 VaultBox - Secure Personal Vault</p>
+</footer>
